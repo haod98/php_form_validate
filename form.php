@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
     <title>Validate</title>
 </head>
 
@@ -59,37 +60,39 @@
 
 
     <form action="" method="POST">
-        <div>
-            <label for="name">Name</label>
-            <input type="text" name="name" id="name" required>
-        </div>
+
+        <label for="name" class="mandatory">Name</label>
+        <input type="text" name="name" id="name" class="mb-3" required>
+
+
+
+        <label for="email" class="mandatory">E-Mail</label>
+        <input type="email" name="email" id="email" class="mb-3">
+
+
+
+        <label for="category" class="mandatory">Category</label>
+        <select name="category" id="category" class="mb-3">
+            <option value="_default" selected disabled>--Please select following options--</option>
+            <option value="small">Small</option>
+            <option value="medium">Medium</option>
+            <option value="large">Large</option>
+        </select>
+
+
+
+        <label for="msg" class="mandatory">Message</label>
+        <textarea name="message" id="msg" cols="30" rows="10" class="mb-3"></textarea>
+
+
 
         <div>
-            <label for="email">E-Mail</label>
-            <input type="email" name="email" id="email">
-        </div>
-
-        <div>
-            <label for="category">Category</label>
-            <select name="category" id="category">
-                <option value="_default" selected disabled>--Please select following options--</option>
-                <option value="small">Small</option>
-                <option value="medium">Medium</option>
-                <option value="large">Large</option>
-            </select>
-        </div>
-
-        <div>
-            <label for="msg">Message</label>
-            <textarea name="message" id="msg" cols="30" rows="10"></textarea>
-        </div>
-
-        <div>
-            <label for="newsletter">Newsletter?</label>
             <input type="checkbox" name="newsletter" id="newsletter">
+            <label for="newsletter" class="mb-3">Would you like to receive newsletters?</label>
         </div>
 
-        <button>Submit</button>
+
+        <button value="submit" name="submit">Submit</button>
     </form>
 </body>
 
