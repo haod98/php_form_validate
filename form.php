@@ -19,7 +19,7 @@
         function validateName(string $nameValue, string $name)
         {
             global $error;
-            if (!isset($_POST[$nameValue])) {
+            if (isset($_POST[$nameValue])) {
                 if (strlen($_POST[$nameValue]) < 2) {
                     $error[$nameValue] = "Please enter a $name with atleast 2 characters. ";
                 }
@@ -30,7 +30,7 @@
 
         $email = $_POST['email'];
         $afterAt = substr($email, strpos($email, "@") + 1); //Everything after @
-        $dotDomainIndex = strpos($afterAt, '.'); //Everything after "."
+        $dotDomainIndex = strpos($afterAt, '.'); //Everything after "." e. g. .com
         $topLevelDomain = (substr($afterAt, $dotDomainIndex + 1)); //The top level domain of an E-Mail e.g "com"
 
         if (
@@ -44,32 +44,27 @@
         }
 
         if (!isset($_POST['category'])) {
-            $error['category'] = "Please select one of the categories. ";
+            $error['category'] = "Please select one of following categories. ";
         }
 
         if (strlen($_POST['message']) < 10) {
-            $error['message'] = "Please be more detailed about your message. ";
+            $error['message'] = "Please be more detailed about your message (At least 10 characters). ";
         }
 
-        if (isset($_POST['newsletter'])) {
-            echo ('Checkbox is checked ');
+        if ($_POST['agb'] === '0') {
+            $error['agb'] = "Please confirm our terms and conditions";
         }
 
-        /*         $errorMsg = '';
-        if (count($error) > 0) {
-            $errorMsg = implode(',', $error); //Display errors(?)
-        }
 
-        $errorMsg = str_replace(',', '', $errorMsg); //Removes the comma
-        echo ($errorMsg); */
-        var_dump($error);
+        //Generate options in select
+
     }
 
     function showError(string $errorKey)
     {
         global $error;
         if (isset($error[$errorKey])) {
-            echo '<p class="mt-0">' . $error[$errorKey] . '</p>';
+            echo '<p class="mt-0 error-msg">' . $error[$errorKey] . '</p>';
         }
     }
 
@@ -80,6 +75,12 @@
         }
     }
 
+
+    $options =  [
+        "small" => "Small",
+        "medium" => "Medium",
+        "large" => "Large"
+    ];
     ?>
 
     <?php
@@ -91,32 +92,59 @@
             <label for="fname" class="mandatory">Firstname</label>
             <input type="text" name="fname" id="fname" class="mb-3" value="<?php old('fname'); ?>" required>
             <?php
-            showError('email');
+            showError('fname');
             ?>
 
             <label for="lname" class="mandatory">Lastname</label>
             <input type="text" name="lname" id="lname" class="mb-3" value="<?php old('lname'); ?>" required>
 
+            <?php
+            showError('lname');
+            ?>
+
             <label for="email" class="mandatory">E-Mail</label>
             <input type="email" name="email" id="email" class="mb-3" value="<?php old('email'); ?>">
+            <?php
+            showError('email');
+            ?>
+
 
             <label for="category" class="mandatory">Category</label>
             <select name="category" id="category" class="mb-3">
                 <option value="_default" selected disabled>--Please select following options--</option>
-                <option value="small">Small</option>
+                <!--                 <option value="small">Small</option>
                 <option value="medium">Medium</option>
-                <option value="large">Large</option>
-            </select>
+                <option value="large">Large</option> -->
+                <?php foreach ($options as $value => $content) : ?>
+                    <option value="<?php echo $value; ?>"><?php echo $content; ?></option>
 
+                <?php endforeach; ?>
+            </select>
+            <?php
+            showError('category');
+            ?>
             <label for="msg" class="mandatory">Message</label>
             <textarea name="message" id="msg" cols="30" rows="10" class="mb-3"><?php old('message'); ?></textarea>
 
+            <?php
+            showError('message');
+            ?>
+
             <div>
-                <input type="checkbox" name="newsletter" id="newsletter">
+                <input type="hidden" name="agb" value="0">
+                <input type="checkbox" name="agb" id="agb" value="1" <?php echo (isset($_POST['agb']) && ($_POST['agb'] === '1') ? "checked" : ""); ?>>
+                <label for="agb" class="mb-3 mandatory">I agree to the terms and conditions</label>
+                <?php
+                showError('agb');
+                ?>
+            </div>
+            <div>
+                <input type="hidden" name="newsletter" value="0">
+                <input type="checkbox" name="newsletter" id="newsletter" value="1">
                 <label for="newsletter" class="mb-3">Would you like to receive newsletters?</label>
             </div>
 
-            <button value="submit" name="submit">Submit</button>
+            <button class="send" value="submit" name="submit">Submit</button>
         </form>
 </body>
 
