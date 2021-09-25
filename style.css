@@ -39,3 +39,18 @@ body {
 .mandatory::after {
   content: "*";
 }
+
+.afterSubmit {
+  text-align: center;
+  font-weight: bold;
+  color: rgb(111, 155, 46);
+  margin: 0;
+}
+
+.check {
+  height: 30px;
+  width: 30px;
+  color: rgb(111, 155, 46);
+  display: block;
+  margin: 0 auto;
+}
