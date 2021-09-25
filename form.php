@@ -13,9 +13,12 @@
     <?php
     ini_set('display_errors', 1);
     error_reporting(E_ALL);
+
+    //Push all errors in an array
     $error = [];
 
     if (isset($_POST['submit'])) {
+        //A function to create firstname and lastname
         function validateName(string $nameValue, string $name)
         {
             global $error;
@@ -55,7 +58,7 @@
             $error['agb'] = "Please confirm our terms and conditions";
         }
 
-        //Prevent changing values in radio buttons
+        //Prevent changing values for radio buttons in HTML via DevTool
         if (isset($_POST['gender'])) {
             if ($_POST['gender'] !== 'male' && $_POST['gender'] !== 'female' && $_POST['gender'] !== 'other') {
                 $error['gender'] = "Value changed";
@@ -67,13 +70,11 @@
             $_POST['gender'] = '';
             $error['gender'] = "Please select a gender";
         }
-
-
-
-
-        //Generate options in select
     }
-
+    //Show all error message in error array
+    /**
+     * @param string $errorKey The array key from error array
+     */
     function showError(string $errorKey)
     {
         global $error;
@@ -82,6 +83,11 @@
         }
     }
 
+
+    //Saves the value after a (failed) submit
+    /**
+     * @param string The value of the $_POST variable 
+     */
     function old(string $value)
     {
         if (isset($_POST[$value])) {
@@ -108,7 +114,7 @@
         ');
     }
 
-
+    //Loop through the array for options
     $options =  [
         "small" => "Small",
         "medium" => "Medium",
