@@ -55,11 +55,6 @@
             $error['agb'] = "Please confirm our terms and conditions";
         }
 
-        //Check if radio button is set
-        if (!isset($_POST['gender'])) {
-            $error['gender'] = "Please select a gender";
-        }
-
         //Prevent changing values in radio buttons
         if (isset($_POST['gender'])) {
             if ($_POST['gender'] !== 'male' && $_POST['gender'] !== 'female' && $_POST['gender'] !== 'other') {
@@ -67,7 +62,13 @@
             }
         }
 
-        var_dump($_POST['gender']);
+        //Check if radio button is set, if not add it to $_POST
+        if (!isset($_POST['gender'])) {
+            $_POST['gender'] = '';
+            $error['gender'] = "Please select a gender";
+        }
+
+
 
 
         //Generate options in select
@@ -86,6 +87,25 @@
         if (isset($_POST[$value])) {
             echo $_POST[$value];
         }
+    }
+
+    /**
+     * A function to generate radio buttons
+     * @param String $name To assign the radio buttons
+     * @param String $id To assign the id's with the labels and value
+     * @param String $content The context of the radio button
+     * */
+
+    function generateRadioButtons(string $name, string $id, string $content)
+    {
+        $checked = '';
+        if (isset($_POST[$name]) && $_POST[$name] === $id) {
+            $checked = 'checked= "checked"';
+        }
+        echo ('
+        <input type="radio" name="' . $name . '" id="' . $id . '" value="' . $id . '"' . $checked . '>
+        <label for="' . $id . '">' . $content . '</label>
+        ');
     }
 
 
@@ -123,12 +143,11 @@
             ?>
             <p class="mb-0 mt-0 mandatory">Gender</p>
             <div class="mb-3">
-                <input type="radio" name="gender" id="male" value="male">
-                <label for="male">Male</label>
-                <input type="radio" name="gender" id="female" value="female">
-                <label for="female">Female</label>
-                <input type="radio" name="gender" id="other" value="other">
-                <label for="other">Other</label>
+                <?php
+                generateRadioButtons("gender", "male", "Male");
+                generateRadioButtons("gender", "female", "Female");
+                generateRadioButtons("gender", "other", "Other");
+                ?>
             </div>
             <?php
             showError('gender');
