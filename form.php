@@ -55,9 +55,22 @@
             $error['agb'] = "Please confirm our terms and conditions";
         }
 
+        //Check if radio button is set
+        if (!isset($_POST['gender'])) {
+            $error['gender'] = "Please select a gender";
+        }
+
+        //Prevent changing values in radio buttons
+        if (isset($_POST['gender'])) {
+            if ($_POST['gender'] !== 'male' && $_POST['gender'] !== 'female' && $_POST['gender'] !== 'other') {
+                $error['gender'] = "Value changed";
+            }
+        }
+
+        var_dump($_POST['gender']);
+
 
         //Generate options in select
-
     }
 
     function showError(string $errorKey)
@@ -106,6 +119,18 @@
             <input type="email" name="email" id="email" class="mb-3" value="<?php old('email'); ?>">
             <?php
             showError('email');
+            ?>
+            <p class="mb-0 mt-0 mandatory">Gender</p>
+            <div class="mb-3">
+                <input type="radio" name="gender" id="male" value="male">
+                <label for="male">Male</label>
+                <input type="radio" name="gender" id="female" value="female">
+                <label for="female">Female</label>
+                <input type="radio" name="gender" id="other" value="other">
+                <label for="other">Other</label>
+            </div>
+            <?php
+            showError('gender');
             ?>
 
 

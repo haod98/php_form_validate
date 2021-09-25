@@ -18,6 +18,10 @@ form > input, form > select, form > textarea {
   margin-top: 0;
 }
 
+.mb-0 {
+  margin-bottom: 0;
+}
+
 .error-msg {
   color: rgb(241, 77, 77);
 }
