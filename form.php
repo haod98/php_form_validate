@@ -158,7 +158,7 @@
             <select name="category" id="category" class="mb-3">
                 <option value="_default" selected disabled>--Please select following options--</option>
                 <?php foreach ($options as $value => $content) : ?>
-                    <option value="<?php echo $value; ?>"><?php echo $content; ?></option>
+                    <option value="<?php echo $value; ?>" <?php echo (isset($_POST['category']) && $_POST['category'] === $value ? 'selected="false"' : ""); ?>><?php echo $content; ?></option>
                 <?php endforeach; ?>
             </select>
             <?php
