@@ -92,7 +92,8 @@
     $options =  [
         "small" => "Small",
         "medium" => "Medium",
-        "large" => "Large"
+        "large" => "Large",
+        "xlarge" => "XL"
     ];
     ?>
 
@@ -137,12 +138,8 @@
             <label for="category" class="mandatory">Category</label>
             <select name="category" id="category" class="mb-3">
                 <option value="_default" selected disabled>--Please select following options--</option>
-                <!--                 <option value="small">Small</option>
-                <option value="medium">Medium</option>
-                <option value="large">Large</option> -->
                 <?php foreach ($options as $value => $content) : ?>
                     <option value="<?php echo $value; ?>"><?php echo $content; ?></option>
-
                 <?php endforeach; ?>
             </select>
             <?php
